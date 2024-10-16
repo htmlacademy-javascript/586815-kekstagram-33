@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Даниил Топольский](https://up.htmlacademy.ru/javascript/33/user/586815).
-* Наставник: `Неизвестно`.
+* Наставник:  [Евгений Лепёшкин](https://htmlacademy.ru/profile/spearance).
 
 ---
 
