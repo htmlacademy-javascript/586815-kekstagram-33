@@ -1,6 +1,6 @@
-import {getRandomInteger} from '../util.js';
-import {COUNTER,MAXNUMBEROFCOMMENTS, PHOTODESCRIPTION, Likes} from './photo-сonstants.js';
-import {createArrayComments} from './create-comments.js';
+import { getRandomInteger } from '../util.js';
+import { COUNTER,MAXNUMBEROFCOMMENTS, PHOTODESCRIPTION, Likes } from './photo-сonstants.js';
+import { createArrayComments } from './create-comments.js';
 
 const createArrayPhotos = (number) => (
   [...new Array(number)].map((_, index) => (

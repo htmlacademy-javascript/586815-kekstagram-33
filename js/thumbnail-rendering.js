@@ -6,16 +6,25 @@ const templateOfThumbnail = document.querySelector('#picture').content.querySele
 
 const fragmentForThumbnails = document.createDocumentFragment();
 
-photos.forEach(({url, description, likes, comments}) => {
+const renderPhoto = ({id, url, description, likes, comments}) => {
   const newThumbnail = templateOfThumbnail.cloneNode(true);
 
+  newThumbnail.querySelector('.picture__img').id = id;
   newThumbnail.querySelector('.picture__img').src = url;
   newThumbnail.querySelector('.picture__img').alt = description;
   newThumbnail.querySelector('.picture__likes').textContent = likes;
   newThumbnail.querySelector('.picture__comments').textContent = comments.length;
 
-  fragmentForThumbnails.appendChild(newThumbnail);
-}
-);
+  return newThumbnail;
+};
 
-windowWithThumbnails.appendChild(fragmentForThumbnails);
+const renderPhotos = (arrayPhotos) => {
+  arrayPhotos.forEach((photo) => {
+    fragmentForThumbnails.appendChild(renderPhoto(photo));
+  }
+  );
+
+  windowWithThumbnails.appendChild(fragmentForThumbnails);
+};
+
+renderPhotos(photos);
