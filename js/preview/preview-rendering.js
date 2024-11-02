@@ -18,7 +18,6 @@ const countNumberComments = preview.querySelector('.social__comment-shown-count'
 const close = () => {
   preview.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  buttonCancelPreview.removeEventListener('click', close);
 };
 
 const onDocumentKeydown = (evt) => {
@@ -67,10 +66,13 @@ const open = (evt) => {
     evt.preventDefault();
 
     document.body.classList.add('modal-open');
-
     preview.classList.remove('hidden');
-    document.addEventListener('keydown', onDocumentKeydown);
-    buttonCancelPreview.addEventListener('click', close);
+
+    document.addEventListener('keydown', onDocumentKeydown, { once: true });
+    buttonCancelPreview.addEventListener('click', () => {
+      close();
+      document.removeEventListener('keydown', onDocumentKeydown);
+    });
 
     const clickedElement = evt.target.closest('.picture');
     const clickedPicture = clickedElement.querySelector('.picture__img');
