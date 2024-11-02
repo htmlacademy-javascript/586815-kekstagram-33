@@ -4,3 +4,5 @@ export const getRandomInteger = (a, b) => {
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
 };
+
+export const isEscapeKey = (evt) => evt.key === 'Escape';
