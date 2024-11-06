@@ -1,8 +1,8 @@
 import { isEscapeKey } from '../util.js';
 import { photos } from '../photo-data/create-array-photos.js';
 
-const MAXSTARTVISIBLECOMMENTS = 5;
-const COUNTERFORSHOWMORECOMMENTS = 5;
+const INITIAL_VISIBLE_COMMENTS = 5;
+const COMMENTS_BATCH_SIZE = 5;
 
 const sectionWithThumbnails = document.querySelector('.pictures');
 const preview = document.querySelector('.big-picture');
@@ -17,6 +17,9 @@ const maxNumberComments = preview.querySelector('.social__comment-total-count');
 const countNumberComments = preview.querySelector('.social__comment-shown-count');
 const buttonShowMoreComments = preview.querySelector('.comments-loader');
 
+let currentVisibleComments;
+let selectedPhoto;
+
 const renderComments = (comments, startIndex, endIndex) => {
   const fragment = document.createDocumentFragment();
   const newComments = comments.slice(startIndex, endIndex);
@@ -30,40 +33,37 @@ const renderComments = (comments, startIndex, endIndex) => {
   commentsList.appendChild(fragment);
 };
 
-const updateCountNumberComments = (count, comments) => {
+const updateVisibleCommentsCount = (count, comments) => {
   countNumberComments.textContent = Math.min(count, comments.length);
 };
 
-const checkCommentLimitAndUpdateUI = (comments, count, act) => {
+const toggleShowMoreButtonVisibility = (comments, count) => {
   if (count >= comments.length) {
     buttonShowMoreComments.classList.add('hidden');
-    buttonShowMoreComments.removeEventListener('click', act);
   }
 };
 
 const renderContent = (array, item) => {
-  const foundItem = array.find((photo) => photo.id === item.id);
-  if (foundItem) {
-    let visibleCommentsCount = MAXSTARTVISIBLECOMMENTS;
-    bigPicture.src = foundItem.url;
-    likes.textContent = foundItem.likes;
-    description.textContent = foundItem.description;
-    maxNumberComments.textContent = foundItem.comments.length;
+  selectedPhoto = array.find((photo) => photo.id === item.id);
+  if (selectedPhoto) {
+    currentVisibleComments = INITIAL_VISIBLE_COMMENTS;
+    bigPicture.src = selectedPhoto.url;
+    likes.textContent = selectedPhoto.likes;
+    description.textContent = selectedPhoto.description;
+    maxNumberComments.textContent = selectedPhoto.comments.length;
     commentsList.innerHTML = '';
-    renderComments(foundItem.comments, 0, visibleCommentsCount);
-    updateCountNumberComments(visibleCommentsCount, foundItem.comments);
-
-    const showMoreComments = () => {
-      const newEndIndex = visibleCommentsCount + COUNTERFORSHOWMORECOMMENTS;
-      renderComments(foundItem.comments, visibleCommentsCount, newEndIndex);
-      visibleCommentsCount = newEndIndex;
-      checkCommentLimitAndUpdateUI(foundItem.comments, visibleCommentsCount, showMoreComments);
-      updateCountNumberComments(visibleCommentsCount, foundItem.comments);
-    };
-
-    buttonShowMoreComments.addEventListener('click', showMoreComments);
-    checkCommentLimitAndUpdateUI(foundItem.comments, visibleCommentsCount, showMoreComments);
+    renderComments(selectedPhoto.comments, 0, currentVisibleComments);
+    updateVisibleCommentsCount(currentVisibleComments, selectedPhoto.comments);
+    toggleShowMoreButtonVisibility(selectedPhoto.comments, currentVisibleComments);
   }
+};
+
+const showMoreComments = () => {
+  const newEndIndex = currentVisibleComments + COMMENTS_BATCH_SIZE;
+  renderComments(selectedPhoto.comments, currentVisibleComments, newEndIndex);
+  currentVisibleComments = newEndIndex;
+  toggleShowMoreButtonVisibility(selectedPhoto.comments, currentVisibleComments, showMoreComments);
+  updateVisibleCommentsCount(currentVisibleComments, selectedPhoto.comments);
 };
 
 const close = () => {
@@ -87,10 +87,6 @@ const open = (evt) => {
     preview.classList.remove('hidden');
 
     document.addEventListener('keydown', onDocumentKeydown, { once: true });
-    buttonCancelPreview.addEventListener('click', () => {
-      close();
-      document.removeEventListener('keydown', onDocumentKeydown);
-    });
 
     const clickedElement = evt.target.closest('.picture');
     const clickedPicture = clickedElement.querySelector('.picture__img');
@@ -99,4 +95,13 @@ const open = (evt) => {
   }
 };
 
+buttonCancelPreview.addEventListener('click', () => {
+  close();
+  document.removeEventListener('keydown', onDocumentKeydown);
+});
+
+buttonShowMoreComments.addEventListener('click', showMoreComments);
+
 sectionWithThumbnails.addEventListener('click', open);
+
+
