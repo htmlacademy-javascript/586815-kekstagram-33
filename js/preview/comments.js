@@ -38,9 +38,7 @@ export const toggleLoadMoreButtonVisibility = (comments, count) => {
 // Функция для инициализации первичного показа комментариев
 export const initCommentsLoad = (comments) => {
   // Сброс начальных значений и загрузка первой порции комментариев
-  arrayComments = [];
   arrayComments = comments;
-  visibleCommentsCount = 0;
   visibleCommentsCount = INITIAL_VISIBLE_COMMENTS;
   commentsList.innerHTML = '';
   renderComments(comments, 0, visibleCommentsCount);
