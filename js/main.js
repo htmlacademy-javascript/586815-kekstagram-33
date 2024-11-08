@@ -1,2 +1,2 @@
 import './thumbnail-rendering.js';
-import './preview/main.js';
+import './preview-rendering.js';

@@ -1,4 +1,5 @@
 import {photos} from './photo-data/create-array-photos.js';
+import { open } from './preview-rendering.js';
 
 const windowWithThumbnails = document.querySelector('.pictures');
 
@@ -6,15 +7,15 @@ const templateOfThumbnail = document.querySelector('#picture').content.querySele
 
 const fragmentForThumbnails = document.createDocumentFragment();
 
-const renderPhoto = ({id, url, description, likes, comments}) => {
+const renderPhoto = (photo) => {
   const newThumbnail = templateOfThumbnail.cloneNode(true);
-
-  newThumbnail.querySelector('.picture__img').id = id;
-  newThumbnail.querySelector('.picture__img').src = url;
-  newThumbnail.querySelector('.picture__img').alt = description;
-  newThumbnail.querySelector('.picture__likes').textContent = likes;
-  newThumbnail.querySelector('.picture__comments').textContent = comments.length;
-
+  newThumbnail.querySelector('.picture__img').src = photo.url;
+  newThumbnail.querySelector('.picture__img').alt = photo.description;
+  newThumbnail.querySelector('.picture__likes').textContent = photo.likes;
+  newThumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
+  newThumbnail.addEventListener('click', () => {
+    open(photo);
+  });
   return newThumbnail;
 };
 
