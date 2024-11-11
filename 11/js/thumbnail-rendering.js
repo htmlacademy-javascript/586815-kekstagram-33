@@ -13,7 +13,8 @@ const renderPhoto = (photo) => {
   newThumbnail.querySelector('.picture__img').alt = photo.description;
   newThumbnail.querySelector('.picture__likes').textContent = photo.likes;
   newThumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
-  newThumbnail.addEventListener('click', () => {
+  newThumbnail.addEventListener('click', (evt) => {
+    evt.preventDefault();
     open(photo);
   });
   return newThumbnail;
