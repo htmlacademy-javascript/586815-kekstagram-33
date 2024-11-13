@@ -75,11 +75,11 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const open = (photo) => {
+const open = (photo, previewBox, actRendering) => {
   document.body.classList.add('modal-open');
-  preview.classList.remove('hidden');
+  previewBox.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydown, { once: true });
-  renderContent(photo);
+  actRendering(photo);
 };
 
 buttonCancelPreview.addEventListener('click', () => {
@@ -89,4 +89,5 @@ buttonCancelPreview.addEventListener('click', () => {
 
 buttonShowMoreComments.addEventListener('click',showMoreComments);
 
-export { open };
+
+export { open, preview, renderContent };
