@@ -1,4 +1,5 @@
 import {photos} from './photo-data/create-array-photos.js';
+
 import { open, preview, renderContent } from './preview-rendering.js';
 
 const windowWithThumbnails = document.querySelector('.pictures');
@@ -15,6 +16,7 @@ const renderPhoto = (photo) => {
   newThumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
   newThumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
+
     open(photo, preview, renderContent);
   });
   return newThumbnail;
