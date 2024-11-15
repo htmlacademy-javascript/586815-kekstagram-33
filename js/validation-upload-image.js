@@ -1,5 +1,6 @@
 import { isEscapeKey } from './util.js';
 import './../vendor/pristine/pristine.min.js';
+import './setup-upload-image.js';
 
 const MAX_DESCRIPTION_LENGTH = 140;
 const MAX_AMOUNT_HASHTAGS = 5;
