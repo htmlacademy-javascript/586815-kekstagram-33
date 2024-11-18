@@ -1,6 +1,7 @@
 import { isEscapeKey } from './util.js';
 import './../vendor/pristine/pristine.min.js';
 import './setup-upload-image.js';
+import { resetEffectsSlider } from './setup-upload-image.js';
 
 const MAX_DESCRIPTION_LENGTH = 140;
 const MAX_AMOUNT_HASHTAGS = 5;
@@ -73,6 +74,7 @@ function close () {
   previewNewPhoto.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
   form.reset();
+  resetEffectsSlider();
 }
 
 const open = () => {

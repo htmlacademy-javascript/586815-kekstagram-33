@@ -57,10 +57,14 @@ noUiSlider.create(sliderEffects, {
 
 let currentId = noneEffect.id;
 
+const resetEffectsSlider = () => {
+  sliderBox.classList.add('hidden');
+  previewImage.style.filter = 'none';
+};
+
 const checkStatusEffects = (id) => {
   if (id === 'effect-none') {
-    sliderBox.classList.add('hidden');
-    previewImage.style.filter = 'none';
+    resetEffectsSlider();
   } else {
     sliderBox.classList.remove('hidden');
   }
@@ -159,3 +163,5 @@ sliderEffects.noUiSlider.on('update', () => {
   valueEffects.value = sliderEffects.noUiSlider.get();
   getStyleEffect(currentId, valueEffects.value);
 });
+
+export { resetEffectsSlider };
