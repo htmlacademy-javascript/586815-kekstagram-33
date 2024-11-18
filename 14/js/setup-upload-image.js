@@ -11,6 +11,13 @@ const increaseScaleButton = document.querySelector('.scale__control--bigger');
 const previewBox = document.querySelector('.img-upload__preview');
 const previewImage = previewBox.querySelector('img');
 
+//Эффекты
+const sliderEffects = document.querySelector('.effect-level__slider');
+const valueEffects = document.querySelector('.effect-level__value');
+const effectsList = document.querySelector('.img-upload__effects');
+const noneEffect = document.getElementById('effect-none');
+const sliderBox = document.querySelector('.img-upload__effect-level');
+
 let currentScaleValue = START_SCALE_VALUE;
 
 const getScaleValue = () => {
@@ -37,14 +44,6 @@ decreaseScaleButton.addEventListener('click', () => {
   }
   getScaleValue(currentScaleValue);
 });
-
-//Эффекты
-const sliderEffects = document.querySelector('.effect-level__slider');
-const valueEffects = document.querySelector('.effect-level__value');
-
-const effectsList = document.querySelector('.img-upload__effects');
-const noneEffect = document.getElementById('effect-none');
-const sliderBox = document.querySelector('.img-upload__effect-level');
 
 noUiSlider.create(sliderEffects, {
   range: {
