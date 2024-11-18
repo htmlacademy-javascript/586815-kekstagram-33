@@ -1,5 +1,4 @@
 import './../vendor/nouislider/nouislider.js';
-import './../vendor/nouislider/nouislider.css';
 
 //масштаб
 const SCALE_STEP = 25;
