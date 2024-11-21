@@ -21,7 +21,13 @@ function validateCombinedHashtags(value) {
   const lowercaseHashtags = hashtags.map((hashtag) => hashtag.toLowerCase());
 
   // Проверка на валидность каждого хэштега
-  const isValid = hashtags.every((hashtag) => /^#[a-zA-Zа-яА-Я0-9]{1,19}$/.test(hashtag));
+  const isValid = hashtags.every((hashtag) => {
+    if (hashtag === '') {
+      return true;
+    }
+    return /^#[a-zA-Zа-яА-Я0-9]{1,19}$/.test(hashtag);
+  });
+
   if (!isValid) {
     return 'Введён невалидный хэштег';
   }
@@ -69,12 +75,21 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const removeEscapeListenerUploadImage = () => {
+  if (document.querySelector('.error__inner')) {
+    document.removeEventListener('keydown', onDocumentKeydown);
+  } else {
+    document.addEventListener('keydown', onDocumentKeydown);
+  }
+};
+
 function close () {
   document.body.classList.remove('modal-open');
   previewNewPhoto.classList.add('hidden');
   document.removeEventListener('keydown', onDocumentKeydown);
   form.reset();
   resetEffectsSlider();
+  pristine.reset();
 }
 
 const open = () => {
@@ -85,12 +100,6 @@ const open = () => {
 
 form.addEventListener('change', open);
 
-form.addEventListener('submit', (evt) => {
-  if(!pristine.validate()) {
-    evt.preventDefault();
-  }
-});
-
 buttonCancelPreviewUpload.addEventListener('click', close);
 
 const onTextFieldFocus = (evt) => {
@@ -99,3 +108,5 @@ const onTextFieldFocus = (evt) => {
 
 descriptionField.addEventListener('keydown', onTextFieldFocus);
 hashtagsField.addEventListener('keydown', onTextFieldFocus);
+
+export { form, pristine, close, removeEscapeListenerUploadImage, onDocumentKeydown };
