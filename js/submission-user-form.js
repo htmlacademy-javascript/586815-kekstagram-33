@@ -1,5 +1,4 @@
-// import { showError, showSuccess } from './util.js';
-import { form, pristine, close, removeEscapeListenerUploadImage, onDocumentKeydown } from './validation-upload-image.js';
+import { form, pristine, close } from './validation-upload-image.js';
 import { sendData } from './api.js';
 import { isEscapeKey } from './util.js';
 
@@ -23,15 +22,18 @@ const unblockSubmitButton = () => {
 };
 
 // Удаляет переданный контейнер и снимает обработчики событий
-const setupCloseHandlers = (container, closeButton, inner, options = null) => {
+const setupCloseHandlers = (container, closeButton, inner, options = () => {}) => {
   const removeContainer = () => {
     container.remove();
+    document.removeEventListener('keydown', onEscapePress);
     document.removeEventListener('click', onOutsideClick);
-    options();
+    if (typeof options === 'function') {
+      options();
+    }
   };
 
   function onEscapePress (evt) {
-    if (isEscapeKey) {
+    if (isEscapeKey(evt)) {
       evt.preventDefault();
       removeContainer();
     }
@@ -69,7 +71,7 @@ const showError = () => {
   fragment.appendChild(errorContainer);
   document.body.appendChild(fragment);
 
-  setupCloseHandlers(errorContainer, errorButton, innerContainer, removeEscapeListenerUploadImage());
+  setupCloseHandlers(errorContainer, errorButton, innerContainer);
 };
 
 const setUserFormSubmit = () => {
@@ -81,7 +83,7 @@ const setUserFormSubmit = () => {
         .then(
           (response) => {
             if (!response.ok) {
-              throw new Error(showError());
+              showError();
             }
             showSuccess();
           }

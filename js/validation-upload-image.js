@@ -69,17 +69,9 @@ pristine.addValidator(
 );
 
 const onDocumentKeydown = (evt) => {
-  if (isEscapeKey(evt)) {
+  if (isEscapeKey(evt) && !document.querySelector('.error')) {
     evt.preventDefault();
     close();
-  }
-};
-
-const removeEscapeListenerUploadImage = () => {
-  if (document.querySelector('.error__inner')) {
-    document.removeEventListener('keydown', onDocumentKeydown);
-  } else {
-    document.addEventListener('keydown', onDocumentKeydown);
   }
 };
 
@@ -109,4 +101,4 @@ const onTextFieldFocus = (evt) => {
 descriptionField.addEventListener('keydown', onTextFieldFocus);
 hashtagsField.addEventListener('keydown', onTextFieldFocus);
 
-export { form, pristine, close, removeEscapeListenerUploadImage, onDocumentKeydown };
+export { form, pristine, close };
