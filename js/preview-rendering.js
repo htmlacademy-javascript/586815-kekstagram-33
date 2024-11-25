@@ -42,7 +42,7 @@ const toggleShowMoreButtonVisibility = (comments, count) => {
   }
 };
 
-export const showMoreComments = () => {
+const showMoreComments = () => {
   const newEndIndex = currentVisibleComments + COMMENTS_BATCH_SIZE;
   renderComments(arrayComments, currentVisibleComments, newEndIndex);
   currentVisibleComments = newEndIndex;

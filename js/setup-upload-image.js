@@ -24,31 +24,29 @@ const getScaleValue = () => {
   previewImage.style.transform = `scale(${currentScaleValue / START_SCALE_VALUE})`;
 };
 
+function getChangeScale(thisButton, otherButton, maxScaleValue, step) {
+  return function () {
+    otherButton.disabled = false;
+    currentScaleValue = currentScaleValue + step;
+    if (currentScaleValue === maxScaleValue) {
+      thisButton.disabled = true;
+    }
+    getScaleValue(currentScaleValue);
+  };
+}
+
 increaseScaleButton.disabled = true;
 
-increaseScaleButton.addEventListener('click', () => {
-  decreaseScaleButton.disabled = false;
-  currentScaleValue = currentScaleValue + SCALE_STEP;
-  if (currentScaleValue === START_SCALE_VALUE) {
-    increaseScaleButton.disabled = true;
-  }
-  getScaleValue(currentScaleValue);
-});
+increaseScaleButton.addEventListener('click', getChangeScale(increaseScaleButton, decreaseScaleButton, START_SCALE_VALUE, SCALE_STEP));
 
-decreaseScaleButton.addEventListener('click', () => {
-  increaseScaleButton.disabled = false;
-  currentScaleValue = currentScaleValue - SCALE_STEP;
-  if (currentScaleValue === SCALE_STEP) {
-    decreaseScaleButton.disabled = true;
-  }
-  getScaleValue(currentScaleValue);
-});
+decreaseScaleButton.addEventListener('click', getChangeScale(decreaseScaleButton, increaseScaleButton, SCALE_STEP, -SCALE_STEP));
 
 noUiSlider.create(sliderEffects, {
   range: {
     min: 0,
     max: 1,
   },
+  connect: 'lower',
   start: 1,
   step: 0.1,
 });
@@ -132,7 +130,8 @@ function updateSlider(id) {
           from: function (value) {
             return parseFloat(value);
           }
-        }});
+        }
+      });
       break;
     case 'effect-phobos':
       sliderEffects.noUiSlider.updateOptions({

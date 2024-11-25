@@ -1,5 +1,3 @@
-import {photos} from './photo-data/create-array-photos.js';
-
 import { open, preview, renderContent } from './preview-rendering.js';
 
 const windowWithThumbnails = document.querySelector('.pictures');
@@ -31,4 +29,5 @@ const renderPhotos = (arrayPhotos) => {
   windowWithThumbnails.appendChild(fragmentForThumbnails);
 };
 
-renderPhotos(photos);
+// renderPhotos(photos);
+export { renderPhotos };
