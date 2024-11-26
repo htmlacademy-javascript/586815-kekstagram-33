@@ -5,7 +5,6 @@ const windowWithThumbnails = document.querySelector('.pictures');
 const templateOfThumbnail = document.querySelector('#picture').content.querySelector('.picture');
 const fragmentForThumbnails = document.createDocumentFragment();
 
-
 const clearThumbnails = () => {
   const photos = document.querySelectorAll('.picture');
   photos.forEach((element) => {
@@ -21,7 +20,6 @@ const renderPhoto = (photo) => {
   newThumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
   newThumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
-
     open(photo, preview, renderContent);
   });
   return newThumbnail;
@@ -54,4 +52,4 @@ const renderPhotos = (photos) => {
   windowWithThumbnails.appendChild(fragmentForThumbnails);
 };
 
-export { renderPhotos, getRandomPhotos, clearThumbnails, getDiscussedPhotos };
+export { renderPhotos, getRandomPhotos, getDiscussedPhotos };
