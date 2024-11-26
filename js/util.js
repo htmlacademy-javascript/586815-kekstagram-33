@@ -2,12 +2,12 @@ const ALERT_SHOW_TIME = 5000;
 
 const templateErrorData = document.querySelector('#data-error').content.querySelector('.data-error');
 
-// const getRandomInteger = (a, b) => {
-//   const lower = Math.ceil(Math.min(a, b));
-//   const upper = Math.floor(Math.max(a, b));
-//   const result = Math.random() * (upper - lower + 1) + lower;
-//   return Math.floor(result);
-// };
+const getRandomInteger = (a, b) => {
+  const lower = Math.ceil(Math.min(a, b));
+  const upper = Math.floor(Math.max(a, b));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+};
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
@@ -22,4 +22,12 @@ const showErrorData = () => {
   }, ALERT_SHOW_TIME);
 };
 
-export { isEscapeKey, showErrorData};
+function debounce (callback, timeoutDelay) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export { isEscapeKey, showErrorData, getRandomInteger, debounce };
