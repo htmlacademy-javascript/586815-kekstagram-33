@@ -1,4 +1,4 @@
-import { getRandomPhotos, getDiscussedPhotos } from './thumbnail-rendering';
+import { getRandomPhotos, getDiscussedPhotos } from './thumbnail-rendering.js';
 
 const MAX_AMOUNT_RANDOM_PHOTOS = 10;
 
