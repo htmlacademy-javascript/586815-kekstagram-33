@@ -5,12 +5,25 @@ import { resetEffectsSlider } from './setup-upload-image.js';
 
 const MAX_DESCRIPTION_LENGTH = 140;
 const MAX_AMOUNT_HASHTAGS = 5;
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const form = document.querySelector('.img-upload__form');
 const previewNewPhoto = document.querySelector('.img-upload__overlay');
 const buttonCancelPreviewUpload = document.querySelector('.img-upload__cancel');
 const descriptionField = form.querySelector('.text__description');
 const hashtagsField = form.querySelector('.text__hashtags');
+const previewUploadimage = previewNewPhoto.querySelector('img');
+const fileChooser = document.querySelector('.img-upload__input[type=file]');
+
+const initUploadImage = () => {
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    previewUploadimage.src = URL.createObjectURL(file);
+  }
+};
 
 function validateDescriptionLength (value) {
   return value.length <= MAX_DESCRIPTION_LENGTH;
@@ -88,6 +101,7 @@ const open = () => {
   document.body.classList.add('modal-open');
   previewNewPhoto.classList.remove('hidden');
   document.addEventListener('keydown', onDocumentKeydown);
+  initUploadImage();
 };
 
 form.addEventListener('change', open);
