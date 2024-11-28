@@ -14,6 +14,7 @@ const descriptionField = form.querySelector('.text__description');
 const hashtagsField = form.querySelector('.text__hashtags');
 const previewUploadimage = previewNewPhoto.querySelector('img');
 const fileChooser = document.querySelector('.img-upload__input[type=file]');
+const effectsUploadImage = document.querySelectorAll('.effects__preview');
 
 const initUploadImage = () => {
   const file = fileChooser.files[0];
@@ -22,6 +23,10 @@ const initUploadImage = () => {
   const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
   if (matches) {
     previewUploadimage.src = URL.createObjectURL(file);
+    effectsUploadImage.forEach((element)=>{
+      element.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+    }
+    );
   }
 };
 
