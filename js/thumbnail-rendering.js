@@ -1,26 +1,26 @@
-import { open, preview, renderContent } from './preview-rendering.js';
+import { open, previewContainerNode, renderContent } from './preview-rendering.js';
 import { getRandomInteger } from './util.js';
 
-const windowWithThumbnails = document.querySelector('.pictures');
-const templateOfThumbnail = document.querySelector('#picture').content.querySelector('.picture');
-const fragmentForThumbnails = document.createDocumentFragment();
+const thumbnailsContainerNode = document.querySelector('.pictures');
+const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
+const fragmentForThumbnailsNode = document.createDocumentFragment();
 
 const clearThumbnails = () => {
-  const photos = document.querySelectorAll('.picture');
-  photos.forEach((element) => {
+  const photoContainersNode = document.querySelectorAll('.picture');
+  photoContainersNode.forEach((element) => {
     element.remove();
   });
 };
 
 const renderPhoto = (photo) => {
-  const newThumbnail = templateOfThumbnail.cloneNode(true);
+  const newThumbnail = thumbnailTemplate.cloneNode(true);
   newThumbnail.querySelector('.picture__img').src = photo.url;
   newThumbnail.querySelector('.picture__img').alt = photo.description;
   newThumbnail.querySelector('.picture__likes').textContent = photo.likes;
   newThumbnail.querySelector('.picture__comments').textContent = photo.comments.length;
   newThumbnail.addEventListener('click', (evt) => {
     evt.preventDefault();
-    open(photo, preview, renderContent);
+    open(photo, previewContainerNode, renderContent);
   });
   return newThumbnail;
 };
@@ -45,11 +45,11 @@ const getDiscussedPhotos = (photos) => [...photos].sort((a, b) => b.comments.len
 const renderPhotos = (photos) => {
   clearThumbnails();
   photos.forEach((photo) => {
-    fragmentForThumbnails.appendChild(renderPhoto(photo));
+    fragmentForThumbnailsNode.appendChild(renderPhoto(photo));
   }
   );
 
-  windowWithThumbnails.appendChild(fragmentForThumbnails);
+  thumbnailsContainerNode.appendChild(fragmentForThumbnailsNode);
 };
 
 export { renderPhotos, getRandomPhotos, getDiscussedPhotos };
