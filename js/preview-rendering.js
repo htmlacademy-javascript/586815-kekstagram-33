@@ -3,17 +3,17 @@ import { isEscapeKey } from './util.js';
 const INITIAL_VISIBLE_COMMENTS = 5;
 const COMMENTS_BATCH_SIZE = 5;
 
-const preview = document.querySelector('.big-picture');
-const buttonCancelPreview = preview.querySelector('.big-picture__cancel');
-const bigPictureContainer = preview.querySelector('.big-picture__img');
-const bigPicture = bigPictureContainer.querySelector('img');
-const likes = preview.querySelector('.likes-count');
-const description = preview.querySelector('.social__caption');
-const commentsList = preview.querySelector('.social__comments');
-const templateComment = commentsList.querySelector('.social__comment');
-const maxNumberComments = preview.querySelector('.social__comment-total-count');
-const countNumberComments = preview.querySelector('.social__comment-shown-count');
-const buttonShowMoreComments = preview.querySelector('.comments-loader');
+const previewContainerNode = document.querySelector('.big-picture');
+const buttonCancelNode = previewContainerNode.querySelector('.big-picture__cancel');
+const imageContainerNode = previewContainerNode.querySelector('.big-picture__img');
+const imageNode = imageContainerNode.querySelector('img');
+const countForLikesNode = previewContainerNode.querySelector('.likes-count');
+const descriptionNode = previewContainerNode.querySelector('.social__caption');
+const commentsListNode = previewContainerNode.querySelector('.social__comments');
+const templateComment = commentsListNode.querySelector('.social__comment');
+const totalCountCommentsNode = previewContainerNode.querySelector('.social__comment-total-count');
+const currentCountComments = previewContainerNode.querySelector('.social__comment-shown-count');
+const buttonShowMoreCommentsNode = previewContainerNode.querySelector('.comments-loader');
 
 let currentVisibleComments;
 let arrayComments = [];
@@ -29,16 +29,16 @@ const renderComments = (comments, startIndex, endIndex) => {
     newComment.querySelector('.social__picture').alt = comment.name;
     fragment.appendChild(newComment);
   });
-  commentsList.appendChild(fragment);
+  commentsListNode.appendChild(fragment);
 };
 
 const updateVisibleCommentsCount = (count, comments) => {
-  countNumberComments.textContent = Math.min(count, comments.length);
+  currentCountComments.textContent = Math.min(count, comments.length);
 };
 
 const toggleShowMoreButtonVisibility = (comments, count) => {
   if (count >= comments.length) {
-    buttonShowMoreComments.classList.add('hidden');
+    buttonShowMoreCommentsNode.classList.add('hidden');
   }
 };
 
@@ -52,20 +52,20 @@ const showMoreComments = () => {
 
 const renderContent = (photo) => {
   currentVisibleComments = INITIAL_VISIBLE_COMMENTS;
-  bigPicture.src = photo.url;
-  likes.textContent = photo.likes;
-  description.textContent = photo.description;
-  maxNumberComments.textContent = photo.comments.length;
-  commentsList.innerHTML = '';
+  imageNode.src = photo.url;
+  countForLikesNode.textContent = photo.likes;
+  descriptionNode.textContent = photo.description;
+  totalCountCommentsNode.textContent = photo.comments.length;
+  commentsListNode.innerHTML = '';
   renderComments(photo.comments, 0, currentVisibleComments);
   updateVisibleCommentsCount(currentVisibleComments, photo.comments);
   toggleShowMoreButtonVisibility(photo.comments, currentVisibleComments);
 };
 
 const close = () => {
-  preview.classList.add('hidden');
+  previewContainerNode.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  buttonShowMoreComments.classList.remove('hidden');
+  buttonShowMoreCommentsNode.classList.remove('hidden');
 };
 
 const onDocumentKeydown = (evt) => {
@@ -82,12 +82,12 @@ const open = (photo, previewBox, actRendering) => {
   actRendering(photo);
 };
 
-buttonCancelPreview.addEventListener('click', () => {
+buttonCancelNode.addEventListener('click', () => {
   close();
   document.removeEventListener('keydown', onDocumentKeydown);
 });
 
-buttonShowMoreComments.addEventListener('click',showMoreComments);
+buttonShowMoreCommentsNode.addEventListener('click',showMoreComments);
 
 
-export { open, preview, renderContent };
+export { open, previewContainerNode, renderContent };
