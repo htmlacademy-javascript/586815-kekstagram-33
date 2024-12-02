@@ -2,14 +2,13 @@ import { getRandomPhotos, getDiscussedPhotos } from './thumbnail-rendering.js';
 
 const MAX_AMOUNT_RANDOM_PHOTOS = 10;
 
-const filtresForm = document.querySelector('.img-filters__form');
-const imageFiltres = document.querySelector('.img-filters');
+const filtresContainerNode = document.querySelector('.img-filters');
+const filtresFormNode = filtresContainerNode.querySelector('.img-filters__form');
 
 let currentStatusFiltres = 'filter-default';
 
 const showFiltres = () => {
-  imageFiltres.classList.remove('img-filters--inactive');
-  document.querySelector('.img-filters__button--active').disabled = true;
+  filtresContainerNode.classList.remove('img-filters--inactive');
 };
 
 function getCurrentPhotos(photos) {
@@ -28,14 +27,11 @@ function getCurrentPhotos(photos) {
 }
 
 const initFiltresForm = (cb) => {
-  filtresForm.addEventListener('click', (evt) => {
-    document.querySelector('.img-filters__button--active').disabled = false;
+  filtresFormNode.addEventListener('click', (evt) => {
+    const button = evt.target.closest('.img-filters__button');
     document.querySelector('.img-filters__button--active').classList.remove('img-filters__button--active');
-    evt.target.classList.add('img-filters__button--active');
+    button.classList.add('img-filters__button--active');
     currentStatusFiltres = document.querySelector('.img-filters__button--active').id;
-    if (currentStatusFiltres !== 'filter-random') {
-      evt.target.disabled = true;
-    }
     cb();
   });
 };
