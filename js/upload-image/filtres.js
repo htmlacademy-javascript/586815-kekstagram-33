@@ -26,13 +26,7 @@ const resetEffectsSlider = () => {
   previewImageNode.style.filter = 'none';
 };
 
-const checkStatusEffects = (id) => {
-  if (id === 'effect-none') {
-    resetEffectsSlider();
-  } else {
-    sliderContainerNode.classList.remove('hidden');
-  }
-};
+const checkStatusEffects = (id) => (id === 'effect-none') ? resetEffectsSlider() : sliderContainerNode.classList.remove('hidden');
 
 checkStatusEffects(currentId);
 
