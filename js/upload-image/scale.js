@@ -29,10 +29,15 @@ function getChangeScale(thisButton, otherButton, maxOrMinScaleValue, step) {
   };
 }
 
+const resetScaleValue = () => {
+  currentScaleValue = MAX_SCALE_VALUE;
+  getScaleValue();
+};
+
 increaseScaleButtonNode.disabled = true;
 
 increaseScaleButtonNode.addEventListener('click', getChangeScale(increaseScaleButtonNode, decreaseScaleButtonNode, MAX_SCALE_VALUE, SCALE_STEP));
 
 decreaseScaleButtonNode.addEventListener('click', getChangeScale(decreaseScaleButtonNode, increaseScaleButtonNode, MIN_SCALE_VALUE, -SCALE_STEP));
 
-export { previewImageNode };
+export { previewImageNode, resetScaleValue };
