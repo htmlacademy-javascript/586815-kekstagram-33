@@ -1,4 +1,5 @@
 import { isEscapeKey } from '../util.js';
+import { resetScaleValue } from './scale.js';
 import { resetEffectsSlider } from './filtres.js';
 import { pristine } from './validation.js';
 
@@ -51,6 +52,7 @@ function close() {
   resetEffectsSlider();
   pristine.reset();
   URL.revokeObjectURL(previewImageNode.src);
+  resetScaleValue();
   resetEffectsList();
 }
 
