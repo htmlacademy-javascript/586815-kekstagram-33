@@ -64,8 +64,8 @@ const open = () => {
   renderEffectsList();
 };
 
-formForUploadNode.addEventListener('change', open);
+formForUploadNode.addEventListener('change',() => open());
 
-buttonCancelNode.addEventListener('click', close);
+buttonCancelNode.addEventListener('click', () => close());
 
 export { formForUploadNode, close };

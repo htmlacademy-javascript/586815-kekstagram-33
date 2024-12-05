@@ -42,11 +42,11 @@ const toggleShowMoreButtonVisibility = (comments, count) => {
   }
 };
 
-const showMoreComments = () => {
+const onShowMoreCommentsButtonClick = () => {
   const newEndIndex = currentVisibleComments + COMMENTS_BATCH_SIZE;
   renderComments(arrayComments, currentVisibleComments, newEndIndex);
   currentVisibleComments = newEndIndex;
-  toggleShowMoreButtonVisibility(arrayComments, currentVisibleComments, showMoreComments);
+  toggleShowMoreButtonVisibility(arrayComments, currentVisibleComments, onShowMoreCommentsButtonClick);
   updateVisibleCommentsCount(currentVisibleComments, arrayComments);
 };
 
@@ -87,7 +87,7 @@ buttonCancelNode.addEventListener('click', () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 });
 
-buttonShowMoreCommentsNode.addEventListener('click',showMoreComments);
+buttonShowMoreCommentsNode.addEventListener('click',onShowMoreCommentsButtonClick);
 
 
 export { open, previewContainerNode, renderContent };

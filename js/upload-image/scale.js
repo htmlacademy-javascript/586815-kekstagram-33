@@ -3,8 +3,8 @@ const MIN_SCALE_VALUE = 25;
 const MAX_SCALE_VALUE = 100;
 
 const scaleValueNode = document.querySelector('.scale__control--value');
-const decreaseScaleButtonNode = document.querySelector('.scale__control--smaller');
-const increaseScaleButtonNode = document.querySelector('.scale__control--bigger');
+const minusButtonNode = document.querySelector('.scale__control--smaller');
+const plusButtonNode = document.querySelector('.scale__control--bigger');
 const previewContainerNode = document.querySelector('.img-upload__preview');
 const previewImageNode = previewContainerNode.querySelector('img');
 
@@ -15,29 +15,36 @@ const getScaleValue = () => {
   previewImageNode.style.transform = `scale(${currentScaleValue / MAX_SCALE_VALUE})`;
 };
 
-function getChangeScale(thisButton, otherButton, maxOrMinScaleValue, step) {
-  return function () {
-    otherButton.disabled = false;
-    if (currentScaleValue === maxOrMinScaleValue) {
-      thisButton.disabled = true;
-      currentScaleValue = maxOrMinScaleValue;
-      scaleValueNode.value = `${maxOrMinScaleValue}%`;
-    } else {
-      currentScaleValue += step;
-    }
-    getScaleValue();
-  };
-}
+const onScaleChangeButtonClick = (thisButton, otherButton, maxOrMinScaleValue, step) => {
+  otherButton.disabled = false;
+  if (currentScaleValue === maxOrMinScaleValue) {
+    thisButton.disabled = true;
+    currentScaleValue = maxOrMinScaleValue;
+    scaleValueNode.value = `${maxOrMinScaleValue}%`;
+  } else {
+    currentScaleValue += step;
+  }
+  getScaleValue();
+};
+
 
 const resetScaleValue = () => {
   currentScaleValue = MAX_SCALE_VALUE;
   getScaleValue();
 };
 
-increaseScaleButtonNode.disabled = true;
+plusButtonNode.disabled = true;
 
-increaseScaleButtonNode.addEventListener('click', getChangeScale(increaseScaleButtonNode, decreaseScaleButtonNode, MAX_SCALE_VALUE, SCALE_STEP));
+const onPlusButtonClick = () => {
+  onScaleChangeButtonClick(plusButtonNode, minusButtonNode, MAX_SCALE_VALUE, SCALE_STEP);
+};
 
-decreaseScaleButtonNode.addEventListener('click', getChangeScale(decreaseScaleButtonNode, increaseScaleButtonNode, MIN_SCALE_VALUE, -SCALE_STEP));
+const onMinusButtonClick = () => {
+  onScaleChangeButtonClick(minusButtonNode, plusButtonNode, MIN_SCALE_VALUE, -SCALE_STEP);
+};
+
+plusButtonNode.addEventListener('click', onPlusButtonClick);
+
+minusButtonNode.addEventListener('click', onMinusButtonClick);
 
 export { previewImageNode, resetScaleValue };

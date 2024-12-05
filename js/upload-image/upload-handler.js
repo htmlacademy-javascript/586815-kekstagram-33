@@ -3,14 +3,14 @@ import { pristine } from './validation.js';
 import { sendData } from '../api.js';
 import { isEscapeKey } from '../util.js';
 
-const submitButtonNode = formForUploadNode.querySelector('.img-upload__submit');
-const templateSuccess = document.querySelector('#success').content.querySelector('.success');
-const templateError = document.querySelector('#error').content.querySelector('.error');
-
 const SubmitButtonText = {
   IDLE: 'Опубликовать',
   SENDING: 'Публикация...'
 };
+
+const submitButtonNode = formForUploadNode.querySelector('.img-upload__submit');
+const templateSuccess = document.querySelector('#success').content.querySelector('.success');
+const templateError = document.querySelector('#error').content.querySelector('.error');
 
 const blockSubmitButton = () => {
   submitButtonNode.disabled = true;
@@ -45,7 +45,9 @@ const setupCloseHandlers = (container, closeButton, inner, options = () => {}) =
     }
   }
 
-  closeButton.addEventListener('click', removeContainer);
+  closeButton.addEventListener('click', () => {
+    removeContainer();
+  });
   document.addEventListener('keydown', onEscapePress);
   document.addEventListener('click', onOutsideClick);
 };
