@@ -15,7 +15,7 @@ const getScaleValue = () => {
   previewImageNode.style.transform = `scale(${currentScaleValue / MAX_SCALE_VALUE})`;
 };
 
-const onScaleChangeButtonClick = (thisButton, otherButton, maxOrMinScaleValue, step) => {
+const getScaleChange = (thisButton, otherButton, maxOrMinScaleValue, step) => {
   otherButton.disabled = false;
   if (currentScaleValue === maxOrMinScaleValue) {
     thisButton.disabled = true;
@@ -36,11 +36,11 @@ const resetScaleValue = () => {
 plusButtonNode.disabled = true;
 
 const onPlusButtonClick = () => {
-  onScaleChangeButtonClick(plusButtonNode, minusButtonNode, MAX_SCALE_VALUE, SCALE_STEP);
+  getScaleChange(plusButtonNode, minusButtonNode, MAX_SCALE_VALUE, SCALE_STEP);
 };
 
 const onMinusButtonClick = () => {
-  onScaleChangeButtonClick(minusButtonNode, plusButtonNode, MIN_SCALE_VALUE, -SCALE_STEP);
+  getScaleChange(minusButtonNode, plusButtonNode, MIN_SCALE_VALUE, -SCALE_STEP);
 };
 
 plusButtonNode.addEventListener('click', onPlusButtonClick);
